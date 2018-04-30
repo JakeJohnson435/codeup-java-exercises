@@ -16,13 +16,13 @@ public class HelloWorld {
 
 //        int x = 3;
 //        int y =4;
-//        y = y*=x;
+//        y*=x;
 //        System.out.println(y);
 
         int x = 10;
         int y = 2;
-        x = x/=y;
-        y = y-=x;
+        x/=y;
+        y-=x;
         System.out.println(y);
         System.out.println(x);
     }
