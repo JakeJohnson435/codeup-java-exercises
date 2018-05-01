@@ -51,7 +51,7 @@ public class ControlFlowExercises {
         Scanner scUserResponse = new Scanner(System.in);
         System.out.println("Do you want to continue? Yes or No");
         String userResponse = scUserResponse.nextLine();
-        if (userResponse.equals("yes") || userResponse.equals("Yes")) {
+        if (userResponse.equalsIgnoreCase("yes")) {
 
             System.out.print("Enter your grade: ");
             int userNumber2;
@@ -60,7 +60,7 @@ public class ControlFlowExercises {
             System.out.println("Do you want to see your grade? Yes or No");
             Scanner scResponse2 = new Scanner(System.in);
             String userResponse2 = scResponse2.nextLine();
-            if (userResponse2.equals("Yes") || userResponse2.equals("yes")) {
+            if (userResponse2.equalsIgnoreCase("Yes")) {
 
                 if (userNumber2 >= 88) {
                     System.out.println("Your grade is an A");
