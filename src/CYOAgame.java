@@ -159,7 +159,8 @@ public class CYOAgame {
                         woodsChoice = scWoodsChoice.nextLine();
 
                         if (woodsChoice.equalsIgnoreCase("continue") || woodsChoice.equalsIgnoreCase("continue through the woods")){
-                            System.out.println("You place your hand on your weapon and make your way into the woods. Not long after you come across a bandit ambush. Prepare for combat!");
+                            System.out.println("You place your hand on your weapon and make your way into the woods. Not long after you come across a bandit ambush. \n" +
+                                    "Prepare for combat!");
 
                             System.out.println("The bandit drops in front of you from a low branch and draws his dagger");
                             System.out.println();
@@ -170,31 +171,33 @@ public class CYOAgame {
                             firstFight = scFirstFight.nextLine();
 
                             if (firstFight.equalsIgnoreCase("attack")){
-                                System.out.println("You draw your weapon and charge in swinging at the bandits neck");
+                                System.out.println("You draw your weapon ready to face the bandit");
                                 int damage;
                                 int enemyDamage;
                                 int banditHealth = 15;
                                 Random rand = new Random();
                                 Random rand2 = new Random();
 
-                                do {
-                                    damage = rand.nextInt(8) + 1;
-                                    System.out.println("You attack does " + damage + " to the bandit!");
-                                    enemyDamage = rand2.nextInt(6) + 1;
-                                    System.out.println("The bandit attacks back dealing " + enemyDamage + " back to you.");
-                                    banditHealth = banditHealth-damage;
-                                    fighterHealth = fighterHealth-enemyDamage;
-                                    System.out.println();
-                                    if (banditHealth<=0){
-                                        System.out.println("Congratulations, you won the fight!");
-                                        break;
-                                    } else if (fighterHealth<=0){
-                                        System.out.println("Looks like you lost...");
-                                        break;
-                                    }
-                                    System.out.println();
+                                if (playerClass.equalsIgnoreCase("fighter")) {
+                                    do {
+                                        damage = rand.nextInt(8) + 1;
+                                        System.out.println("You attack does " + damage + " to the bandit!");
+                                        enemyDamage = rand2.nextInt(6) + 1;
+                                        System.out.println("The bandit attacks back dealing " + enemyDamage + " back to you.");
+                                        banditHealth = banditHealth - damage;
+                                        fighterHealth = fighterHealth - enemyDamage;
+                                        System.out.println();
+                                        if (banditHealth <= 0) {
+                                            System.out.println("Congratulations, you won the fight!");
+                                            break;
+                                        } else if (fighterHealth <= 0) {
+                                            System.out.println("Looks like you lost...");
+                                            break;
+                                        }
+                                        System.out.println();
 
-                                } while (true);
+                                    } while (true);
+                                }
 
                                 if (fighterHealth>0) {
                                     System.out.println("You have won the fight against the bandit and decide to run through the rest of the woods\n" +
