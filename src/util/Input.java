@@ -66,6 +66,11 @@ public class Input {
         return  input;
     }
 
+    public double getDouble(){
+        double input = scanner.nextDouble();
+        return input;
+    }
+
 }
 
 
