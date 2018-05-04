@@ -1,54 +1,53 @@
 import java.util.Scanner;
 
 public class Person {
+
+    private String name;
+
+    public Person(String name) {
+        setName(name);
+
+
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void sayHello() {
+        System.out.println("Hello " + name);
+    }
+
     public static void main(String[] args) {
-
-        String editName;
-        Scanner scEditName = new Scanner(System.in);
-
-
-        Person name = new Person();
-        name.firstName = "Jake";
-        name.lastName = "Johnson";
-
-        getName();
-        System.out.println("Do you want to change the name? Y / N");
-        editName = scEditName.nextLine();
-
-            if (editName.equalsIgnoreCase("y") || editName.equalsIgnoreCase("yes")){
-                setName();
-
-                System.out.println("You changed the name to " + name.firstName + " " + name.lastName);
-            }
-
-        sayHello();
-
+        Person person = new Person("Jake");
+        System.out.println(person.getName());
+        person.setName("Johnson");
+        person.sayHello();
     }
 
-
-
-    public static String firstName;
-    public static String lastName;
-
-    public static String getName(){
-        System.out.println(Person.firstName + " " + Person.lastName);
-        return Person.firstName + Person.lastName;
-    }
-
-    public static String setName(){
-        Scanner scFirstName = new Scanner(System.in);
-        Scanner scLastName = new Scanner(System.in);
-        System.out.println("Change first name: ");
-        Person.firstName = scFirstName.next();
-        System.out.println("Change last name: ");
-        Person.lastName = scLastName.next();
-        return Person.firstName + Person.lastName;
-    }
-
-    public static String sayHello(){
-        System.out.println("Hello "+ Person.firstName + " " + Person.lastName);
-        return Person.firstName + Person.lastName;
-    }
-
-
+//    public Person(String name) {this.name = name;}
+//
+//
+//    public String getName() {
+//        return this.name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//        System.out.println("Changing user’s name to "+ name);
+//    }
+//
+//    public void sayHello() {System.out.println(this.name + " says Hello!");}
+//
+//    public static void main(String[] args) {
+//        Person jake = new Person("Jake");
+//        jake.getName();
+//        jake.setName("Shake");
+//        jake.sayHello();
+//
+//    }
 }
