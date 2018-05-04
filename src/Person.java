@@ -6,8 +6,6 @@ public class Person {
 
     public Person(String name) {
         setName(name);
-
-
     }
 
     public String getName() {
