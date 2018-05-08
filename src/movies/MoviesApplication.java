@@ -38,6 +38,7 @@ public class MoviesApplication {
             System.out.println("3 - view movies in the drama category");
             System.out.println("4 - view movies in the horror category");
             System.out.println("5 - view movies in the scifi category");
+            System.out.println("6 - add a movie to our list");
             System.out.println();
             userChoice = input.getInt();
 
@@ -55,6 +56,10 @@ public class MoviesApplication {
                 } else if (userChoice == 5){
                     genre = "scifi";
                     movieGenre();
+                } else if (userChoice == 6){
+
+                } else {
+                    break;
                 }
 
         } while (userChoice != 0);
