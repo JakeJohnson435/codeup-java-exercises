@@ -71,6 +71,11 @@ public class Input {
         return input;
     }
 
+    public int getInt(){
+        int input = scanner.nextInt();
+        return input;
+    }
+
 }
 
 
