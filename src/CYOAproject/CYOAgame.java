@@ -43,7 +43,7 @@ public class CYOAgame extends Combat{
                 playerHealth = 15;
                 playerDamage = 6;
                 playerArmor = 4;
-                classSpells = "Fireball | Chain Lightning | Poison Spray | Earthquake | Waterspout";
+                classSpells = "Fireball | Chain Lightning | Poison Spray | Earthquake | Freeze";
             } else if (playerClass.equalsIgnoreCase("Fighter")){
                 playerHealth = 25;
                 playerDamage = 10;
@@ -213,13 +213,17 @@ public class CYOAgame extends Combat{
                                 System.out.println("You draw your weapon, ready to face the bandit");
                                 int enemyHealth = 15;
                                 int enemyDamage = 6;
+                                String enemyCondition = "";
                                 String combat;
                                 Scanner scCombat = new Scanner(System.in);
+                                String spell;
+                                Scanner scSpell = new Scanner(System.in);
 
                                 do {
                                     System.out.println("What do you want to do?");
                                     System.out.println("Melee | Cast a Spell | Defend | Flee");
                                     combat = scCombat.nextLine();
+
 
                                     if (combat.equalsIgnoreCase("Melee")){
                                         System.out.println("You make a melee attack.");
@@ -237,12 +241,39 @@ public class CYOAgame extends Combat{
                                     } else if (combat.equalsIgnoreCase("Cast a Spell")){
                                         System.out.println("Choose a Spell: ");
                                         System.out.println(classSpells);
+                                        spell = scSpell.nextLine();
+                                        if (spell.equalsIgnoreCase("heal")){
+                                            playerHealth = heal(playerHealth);
+                                        } else if (spell.equalsIgnoreCase("magic weapon") || spell.equalsIgnoreCase("hunters mark") || spell.equalsIgnoreCase("hunter's mark")){
+                                            playerDamage = buff(spell, playerDamage);
+                                        } else {
+                                            enemyHealth = spell(spell, enemyHealth);
+                                            if (spell.equalsIgnoreCase("fireball")){
+                                                enemyCondition = "burning";
+                                            }
+
+                                            if (spell.equalsIgnoreCase("poison dart") || spell.equalsIgnoreCase("poison spray")){
+                                                enemyCondition = "poisoned";
+                                            }
+                                        }
+                                        System.out.println();
+                                        if (enemyHealth <= 0){
+                                            break;
+                                        }
+                                        if (playerHealth <= 0){
+                                            break;
+                                        }
+                                        playerHealth = enemyTurn(enemyDamage, playerHealth);
+                                        System.out.println("You have " + playerHealth + " HP remaining.");
                                         System.out.println();
                                     } else if (combat.equalsIgnoreCase("Defend")){
                                         System.out.println("You attempt to defend yourself from the incoming attack.");
                                         playerHealth = defend(playerHealth, playerArmor, enemyDamage);
                                         System.out.println("You have " + playerHealth + " HP remaining.");
                                         System.out.println();
+                                        if (playerHealth <= 0){
+                                            break;
+                                        }
                                     } else if (combat.equalsIgnoreCase("flee")){
                                         flee();
                                         if (flee == true){
@@ -254,9 +285,14 @@ public class CYOAgame extends Combat{
                                             }
                                             System.out.println();
                                         }
-                                    if (playerHealth <= 0) {
-                                        break;
-                                    }
+
+                                        if (!"".equalsIgnoreCase(enemyCondition)){
+                                            enemyHealth = condition(enemyCondition, enemyHealth);
+                                            if (enemyHealth <= 0){
+                                                System.out.println("Your enemy has died to the effects of your spell");
+                                                break;
+                                            }
+                                        }
                                 } while (enemyHealth > 0 || playerHealth >0);
 
 
