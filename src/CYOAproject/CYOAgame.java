@@ -1,16 +1,25 @@
+package CYOAproject;
+
 import java.util.Scanner;
 import java.util.Random;
 
-public class CYOAgame {
+public class CYOAgame extends Combat{
+
+
     public static void main(String[] args) {
+
         System.out.println("Welcome to the world of Merenthel. Are you ready to start your adventure? Yes or No");
         String beginGame;
         String playerClass;
         String playerHome;
+        String playerName;
         String playerDirection;
         String firstJob;
         String startFirstJob;
-        int fighterHealth = 25;
+        int playerHealth = 0;
+        int playerDamage = 0;
+        int playerArmor = 0;
+        String classSpells = "";
         Scanner scBeginGame = new Scanner(System.in);
         beginGame = scBeginGame.nextLine();
         if (beginGame.equalsIgnoreCase("yes") || beginGame.equalsIgnoreCase("y")){
@@ -25,7 +34,37 @@ public class CYOAgame {
                 classChoice = scClassChoice.nextLine();
             } while (classChoice.equalsIgnoreCase("no") || classChoice.equalsIgnoreCase("n"));
 
-            System.out.println("Where were you born?");
+            if (playerClass.equalsIgnoreCase("Ranger")){
+                playerHealth = 20;
+                playerDamage = 8;
+                playerArmor = 6;
+                classSpells = "Bow | Hail of Thorns | Hunter's Mark";
+            } else if (playerClass.equalsIgnoreCase("Wizard")){
+                playerHealth = 15;
+                playerDamage = 6;
+                playerArmor = 4;
+                classSpells = "Fireball | Chain Lightning | Poison Spray | Earthquake | Waterspout";
+            } else if (playerClass.equalsIgnoreCase("Fighter")){
+                playerHealth = 25;
+                playerDamage = 10;
+                playerArmor = 8;
+                classSpells = "You're a Fighter not a magician. Get in there and hit them.";
+            } else if (playerClass.equalsIgnoreCase("Rogue")){
+                playerHealth = 20;
+                playerDamage = 6;
+                playerArmor = 6;
+                classSpells = "Vanish | Poison Dart | Smoke Bomb";
+            } else if (playerClass.equalsIgnoreCase("Paladin")){
+                playerHealth = 30;
+                playerDamage = 8;
+                playerArmor = 10;
+                classSpells = "Heal | Smite | Magic Weapon";
+            }
+
+            System.out.println("What is your name?");
+            Scanner scPlayerName = new Scanner(System.in);
+            playerName = scPlayerName.nextLine();
+            System.out.println("Nice to meet you " + playerName + ", I am Guild Master Murdoc. Where are you from??");
             Scanner scPlayerHome = new Scanner(System.in);
             playerHome = scPlayerHome.nextLine();
             System.out.println("Ah, I haven't heard of "+ playerHome + ". Where is it located?");
@@ -171,38 +210,71 @@ public class CYOAgame {
                             firstFight = scFirstFight.nextLine();
 
                             if (firstFight.equalsIgnoreCase("attack")){
-                                System.out.println("You draw your weapon ready to face the bandit");
-                                int damage;
-                                int enemyDamage;
-                                int banditHealth = 15;
-                                Random rand = new Random();
-                                Random rand2 = new Random();
+                                System.out.println("You draw your weapon, ready to face the bandit");
+                                int enemyHealth = 15;
+                                int enemyDamage = 6;
+                                String combat;
+                                Scanner scCombat = new Scanner(System.in);
 
-                                if (playerClass.equalsIgnoreCase("fighter")) {
-                                    do {
-                                        damage = rand.nextInt(8) + 1;
-                                        System.out.println("You attack does " + damage + " to the bandit!");
-                                        enemyDamage = rand2.nextInt(6) + 1;
-                                        System.out.println("The bandit attacks back dealing " + enemyDamage + " back to you.");
-                                        banditHealth = banditHealth - damage;
-                                        fighterHealth = fighterHealth - enemyDamage;
+                                do {
+                                    System.out.println("What do you want to do?");
+                                    System.out.println("Melee | Cast a Spell | Defend | Flee");
+                                    combat = scCombat.nextLine();
+
+                                    if (combat.equalsIgnoreCase("Melee")){
+                                        System.out.println("You make a melee attack.");
+                                        enemyHealth = meleeCombat(playerDamage, enemyHealth);
                                         System.out.println();
-                                        if (banditHealth <= 0) {
-                                            System.out.println("Congratulations, you won the fight!");
-                                            break;
-                                        } else if (fighterHealth <= 0) {
-                                            System.out.println("Looks like you lost...");
+                                        if (enemyHealth <= 0){
                                             break;
                                         }
+                                        if (playerHealth <= 0){
+                                            break;
+                                        }
+                                        playerHealth = enemyTurn(enemyDamage, playerHealth);
+                                        System.out.println("You have " + playerHealth + " HP remaining.");
                                         System.out.println();
+                                    } else if (combat.equalsIgnoreCase("Cast a Spell")){
+                                        System.out.println("Choose a Spell: ");
+                                        System.out.println(classSpells);
+                                        System.out.println();
+                                    } else if (combat.equalsIgnoreCase("Defend")){
+                                        System.out.println("You attempt to defend yourself from the incoming attack.");
+                                        playerHealth = defend(playerHealth, playerArmor, enemyDamage);
+                                        System.out.println("You have " + playerHealth + " HP remaining.");
+                                        System.out.println();
+                                    } else if (combat.equalsIgnoreCase("flee")){
+                                        flee();
+                                        if (flee == true){
+                                            System.out.println();
+                                            break;
+                                        } else {
+                                            playerHealth = enemyTurn(enemyDamage, playerHealth);
+                                            System.out.println("You have " + playerHealth + " HP remaining.");
+                                            }
+                                            System.out.println();
+                                        }
+                                    if (playerHealth <= 0) {
+                                        break;
+                                    }
+                                } while (enemyHealth > 0 || playerHealth >0);
 
-                                    } while (true);
-                                }
 
-                                if (fighterHealth>0) {
-                                    System.out.println("You have won the fight against the bandit and decide to run through the rest of the woods\n" +
+
+                                if (playerHealth>0) {
+                                    System.out.println("You have survived the fight against the bandit and decide to run through the rest of the woods\n" +
                                             "before anything else can happen. After several minutes you end up on the trail on the other side of the trees\n" +
                                             "looking up towards the city surrounding Lowfeld Castle. Now to deliver that letter");
+                                } else {
+                                    System.out.println("Here lies " + playerName + ", the one who thought he was a hero");
+                                    System.out.println("      _______     ");
+                                    System.out.println("     /       \\   ");
+                                    System.out.println("    /         \\  ");
+                                    System.out.println("   |           |  ");
+                                    System.out.println("   |   " + playerName + "    |");
+                                    System.out.println("   |           |  ");
+                                    System.out.println("   |           |  ");
+                                    System.out.println("   |           |  ");
                                 }
 
                             }
