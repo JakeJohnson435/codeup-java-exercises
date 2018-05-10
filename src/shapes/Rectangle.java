@@ -18,16 +18,6 @@ public class Rectangle extends Quadrilateral implements Measurable{
     }
 
     @Override
-    public double getLength() {
-        return 0;
-    }
-
-    @Override
-    public double getWidth() {
-        return 0;
-    }
-
-    @Override
     void setLength() {
 
     }

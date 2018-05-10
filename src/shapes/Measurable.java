@@ -6,5 +6,4 @@ public interface Measurable {
     double getLength();
     double getWidth();
 
-
 }
