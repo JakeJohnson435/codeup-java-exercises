@@ -7,15 +7,12 @@ public class Input {
 
 
     public String getString() {
-        System.out.println("Enter a string: ");
         String input = scanner.nextLine();
         System.out.println(input);
         return input;
     }
 
     public boolean yesNo(){
-
-        System.out.println("Press Y or N");
         String input;
 
 
@@ -23,14 +20,12 @@ public class Input {
             input = scanner.next();
             if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
                 val = true;
-                System.out.println("True");
                 break;
             } else if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
                 val = false;
-                System.out.println("False");
                 break;
             } else {
-                System.out.println("Try again. Press Y or N");
+                System.out.println("Try again.");
             }
         }while(!input.equalsIgnoreCase("y") || !input.equalsIgnoreCase("n"));
         return val;
