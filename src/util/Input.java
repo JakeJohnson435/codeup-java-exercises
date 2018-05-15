@@ -2,19 +2,17 @@ package util;
 import java.util.Scanner;
 
 public class Input {
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in).useDelimiter("\n");
     boolean val;
 
 
     public String getString() {
-        String input = scanner.nextLine();
-        System.out.println(input);
+        String input = scanner.next();
         return input;
     }
 
     public boolean yesNo(){
         String input;
-
 
         do{
             input = scanner.next();
@@ -33,42 +31,50 @@ public class Input {
 
     public int getInt(int min, int max){
         System.out.println("enter a number between "+ min + " " +max);
-        int input;
-
-        do{
-            input = scanner.nextInt();
-            if (input > min && input < max){
-                System.out.println("You entered " + input);
-            } else {
-                System.out.println("Try again");
-            }
-        } while (input < min || input > max);
-        return  input;
+        int value = getInt();
+        if (value < min || value > max) {
+            return getInt(min, max);
+        }
+        return value;
     }
 
     public double getDouble(double min, double max){
         System.out.println("enter a number between "+ min + " " +max);
-        double input;
-
-        do{
-            input = scanner.nextDouble();
-            if (input > min && input < max){
-                System.out.println("You entered " + input);
-            } else {
-                System.out.println("Try again");
-            }
-        } while (input < min || input > max);
-        return  input;
+        double value = getDouble();
+        if (value < min || value > max) {
+            return getDouble(min, max);
+        }
+        return value;
     }
 
     public double getDouble(){
-        double input = scanner.nextDouble();
-        return input;
+        try {
+            return Double.valueOf(getString());
+        } catch(NumberFormatException e) {
+            System.out.println("Must input a double.");
+            return getDouble();
+        }
     }
 
     public int getInt(){
-        int input = scanner.nextInt();
-        return input;
+        try {
+            return Integer.valueOf(getString());
+        } catch(NumberFormatException e) {
+            System.out.println("Must input an integer.");
+            return getInt();
+        }
+    }
+
+    public int getBinary(){
+        int number = Integer.valueOf(getString(), 2);
+        System.out.println(number);
+        return number;
+    }
+
+    public int getHex(){
+        int number = Integer.valueOf(getString(), 16);
+        System.out.println(number);
+        return number;
     }
 
 }
